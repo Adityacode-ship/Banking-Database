@@ -226,3 +226,59 @@ select * from accounts where balance > 2000;
 select * from accounts where account_type != "saving" && balance > 2000; -- USE AND SYMBOL &&, FOR OR USE ||
 
 select * from accounts where NOT balance > 2000;
+
+select * from accounts;
+
+update banking set AccountCreationDate = "2025-07-03"
+where CustomerID = 101;
+update banking set AccountCreationDate = "2026-01-25"
+where CustomerID = 102;
+update banking set AccountCreationDate = "2022-03-18"
+where CustomerID = 105;
+
+select * from banking
+where AccountCreationDate >"2023-01-01";
+
+select FirstName, LastName, Email from banking
+where Phone = "9922508562" or phone= "7972874038"or phone= "8080569957";
+
+
+-- between operator
+select * from accounts
+where Balance between 5000 and 20000; -- range sorting
+
+select * from accounts
+where Balance < 20000 && Balance > 5000; -- range sorting
+
+-- like operator
+-- find all customers whose first name starts with letter "k"
+
+select * from banking
+where FirstName like "A%";
+
+select * from banking
+where LastName like "%E";-- ends with "e" "%" matcher any number of char and even 0 characters and "_" matches exactly one charachers
+
+select * from banking
+where LastName like "________";
+
+-- order by clause sorting
+
+select CustomerID, Balance
+from accounts
+order by Balance;
+
+select BranchID, BranchName
+from branch
+order by BranchName DESC;
+
+select CustomerID, Balance, Account_type
+from accounts
+order by Account_type desc,Balance desc; 
+select distinct Account_type
+from Accounts;
+
+select * from transaction;
+
+select distinct transactionType, account_id
+from transaction;
