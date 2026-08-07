@@ -282,3 +282,19 @@ select * from transaction;
 
 select distinct transactionType, account_id
 from transaction;
+
+select * from accounts
+order by balance desc limit 3 ;
+select * from accounts
+order by balance desc limit 1 offset 2 ;
+
+select * from accounts
+order by balance desc limit 2,1 ; -- two represent offset and 1 represent limit
+select * from banking;
+insert into banking(CustomerID, FirstName, LastName, Email, AccountCreationDate, DateofBirth)
+values(106,"raghav","churhe","raghav@gmail.com","2026-03-01","2008-01-05"),
+(107,"ram","neware","ram@gmail.com","2021-02-16","1981-06-02"),
+(108,"jay","ahir","ahir@gmail.com","2023-03-15","2002-09-16");
+select * from banking
+where phone is not null;
+
