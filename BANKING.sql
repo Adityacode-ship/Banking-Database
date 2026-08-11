@@ -298,3 +298,118 @@ values(106,"raghav","churhe","raghav@gmail.com","2026-03-01","2008-01-05"),
 select * from banking
 where phone is not null;
 
+select * from accounts;
+
+insert into accounts
+(account_id,account_type,Balance,customerID,branchID)
+values(1260,"saving",20000,106,902),
+(1261,"saving",16000,107,905),
+(1262,"saving",6000,108,903),
+(1263,"current",50000,108,902);
+
+select * from transaction;
+
+insert into loans
+values(506,"2000","5","2022-06-02","2022-08-03",106),
+(507,"25000","10","2025-08-16","2025-09-23",102),
+(508,"16000","7","2026-06-25","2026-07-03",103),
+(509,"26000","12","2026-06-02","2026-09-03",105),
+(510,"9000","10","2026-05-16","2026-10-17",105);
+
+insert into transaction
+values(606,"2026-09-26","5000","UPI",1260),
+(607,"2026-07-05","10000","RTGS",1261),
+(608,"2026-07-02","12000","CASH",1262),
+(609,"2026-05-05","8500","UPI",1263);
+-- (610,"2026-03-10","20000","RTGS",1263);
+
+select * from transaction;
+
+ alter table transaction
+ add constraint 
+ foreign key (account_id) 
+ references accounts(account_id);
+ 
+ select * from accounts;
+ 
+ -- ifn my balance value is <50000 else low vale customers
+ 
+ select account_id, account_type, Balance,
+ case 
+	when Balance>= 20000 then " High Value Customers"
+    else "Low Value Customers"
+ end as category
+ from accounts;
+ 
+ select CustomerID, FirstName, Email from banking -- level 1 Q1
+ where AccountCreationdate > "2025-01-15";
+ 
+ select * from accounts 
+ where account_type = "saving" AND Balance >"2000";
+ 
+ SELECT * from Banking 
+ where phone is not null;
+ 
+select distinct Account_type
+from Accounts;
+
+select * from banking
+where FirstName like "A%";
+
+select * from accounts 
+where account_type = "saving" && balance between "2000" AND "20000";
+
+select FirstName, LastName from banking where phone is null;
+
+
+select * from banking 
+where FirstName like "A%" && LastName like "%e";
+
+select * from accounts
+where account_type = "saving" or "current" && balance > "10000";
+
+select * from banking
+where CustomerID in (101,102,103,104) && phone is not null ;
+
+select * from banking
+where FirstName like "R%" && phone is null;
+
+select * from accounts
+where balance not between "10000" AND "20000";
+
+select * from banking
+where CustomerID NOT in (101,102,103,104);
+select * from transaction;
+
+select * ,
+case
+	when transactionType = "UPI" then "Not applicable"
+    when amount >= "12000" then "high amount"
+    when amount >="8000" then "medium amount"
+		else "low amount"
+	end as eligible
+    from transaction;
+    
+select *,
+case 
+	when transactionType = "UPI" then "Digital Transaction"
+		else "cash method"
+        
+	end as transactionCategory
+    from transaction;
+    
+    select * from transaction;
+    
+    select CustomerID, upper (FirstName),upper(LastName) from banking;
+  select CustomerID, lower (FirstName),lower(LastName) from banking;
+--  select account_id, account_type, Balance,
+--  case 
+-- 	when Balance>= 20000 then " High Value Customers"
+--     else "Low Value Customers"
+--  end as category
+--  from accounts;
+select length("nagpur") as characters;
+select length("नागपूर");-- gives output in no. of bytes 
+select character_length("नागपूर"); -- gives output in no. of character
+select concat(FirstName," ",LastName) as FullName from banking;
+select CustomerID,concat(substr(FirstName,1,1),".",substr(LastName,1)) as short_name from banking;
