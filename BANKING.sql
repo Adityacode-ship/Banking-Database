@@ -400,8 +400,8 @@ case
     
     select * from transaction;
     
-    select CustomerID, upper (FirstName),upper(LastName) from banking;
-  select CustomerID, lower (FirstName),lower(LastName) from banking;
+select CustomerID, upper (FirstName),upper(LastName) from banking;
+select CustomerID, lower (FirstName),lower(LastName) from banking;
 --  select account_id, account_type, Balance,
 --  case 
 -- 	when Balance>= 20000 then " High Value Customers"
@@ -412,4 +412,36 @@ select length("nagpur") as characters;
 select length("नागपूर");-- gives output in no. of bytes 
 select character_length("नागपूर"); -- gives output in no. of character
 select concat(FirstName," ",LastName) as FullName from banking;
-select CustomerID,concat(substr(FirstName,1,1),".",substr(LastName,1)) as short_name from banking;
+select CustomerID,concat(substr(FirstName,1,1),".",substr(LastName,1)) as short_name from banking;-- substring (1,1) first starts with and second indicates how many letters you want.
+
+select length(trim(" hello world "));
+select length(trim(substr("hello world",6)));
+
+select replace ("Mat","M","C"); -- (string, from string you want to replace, then what value you want to add)
+
+select round(avg(Balance),2) from accounts where account_type = "current";
+select ceil(avg(Balance)) from accounts where account_type = "current";-- ceil always round off in upper values
+-- floor always roundoff in lower values
+select floor(avg(Balance)) from accounts where account_type = "current";
+
+select abs(-1.22); -- removes the sign and returns only values
+select mod(7,8);
+-- power()
+select power(2,3);
+
+-- now() give current date and time
+
+select DateofBirth, year(DateofBirth) as year, month(DateofBirth) as month, day (DateofBirth) as day from banking;
+
+select concat(FirstName," ",LastName) as FullName, floor(datediff(now(),DateofBirth) / 365.25) as current_age from banking;
+
+-- date
+select concat(FirstName," ",LastName) as FullName,AccountCreationDate, adddate(AccountCreationdate,interval 1 year) as kyc_renewalDate from banking;
+
+
+
+
+
+
+
+
