@@ -320,8 +320,8 @@ insert into transaction
 values(606,"2026-09-26","5000","UPI",1260),
 (607,"2026-07-05","10000","RTGS",1261),
 (608,"2026-07-02","12000","CASH",1262),
-(609,"2026-05-05","8500","UPI",1263);
--- (610,"2026-03-10","20000","RTGS",1263);
+(609,"2026-05-05","8500","UPI",1263),
+(610,"2026-03-10","20000","RTGS",1263);
 
 select * from transaction;
 
@@ -425,7 +425,7 @@ select ceil(avg(Balance)) from accounts where account_type = "current";-- ceil a
 select floor(avg(Balance)) from accounts where account_type = "current";
 
 select abs(-1.22); -- removes the sign and returns only values
-select mod(7,8);
+select mod(7,3);
 -- power()
 select power(2,3);
 
@@ -437,6 +437,38 @@ select concat(FirstName," ",LastName) as FullName, floor(datediff(now(),DateofBi
 
 -- date
 select concat(FirstName," ",LastName) as FullName,AccountCreationDate, adddate(AccountCreationdate,interval 1 year) as kyc_renewalDate from banking;
+
+select * from accounts;
+select count(phone) from banking;
+
+select sum(balance) as savings_balance from accounts where account_type = "saving";
+select avg(balance) as avg_savings_balance from accounts where account_type = "saving";
+select Min(balance) as MinAmt from accounts where account_type = "saving";
+
+select Max(balance) as MaxAmt from accounts where account_type = "saving";
+
+SELECT 
+    transactionType, SUM(amount)
+FROM
+    transaction
+GROUP BY (transactionType); 
+
+select * from accounts;
+
+SELECT 
+    account_type,
+    COUNT(*) AS totalaccounts,
+    SUM(Balance) AS totalBalance,
+    AVG(Balance) AS avgBalance
+FROM
+    accounts
+GROUP BY (account_type); 
+SELECT 
+    branchID, account_Type, COUNT(*) as totalnoOFAccounts
+FROM
+    accounts
+GROUP BY branchID , account_Type; 
+
 
 
 
