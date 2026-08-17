@@ -453,7 +453,7 @@ FROM
     transaction
 GROUP BY (transactionType); 
 
-select * from accounts;
+select * from loans;
 
 SELECT 
     account_type,
@@ -469,7 +469,47 @@ FROM
     accounts
 GROUP BY branchID , account_Type; 
 
+SELECT 
+    branchID, account_Type, COUNT(*) as totalnoOFAccounts
+FROM
+    accounts
+GROUP BY branchID , account_Type 
+having totalnoOFAccounts >= 2 and account_type = "saving" ;
+select * from banking;
+-- find number of customers according to year   
+select year(AccountCreationDate) as years ,count(*) as Total_Years
+from banking
+group by years
+order by years asc; 
 
+select * from banking;
+
+SELECT 
+    b.FirstName, b.LastName, b.customerid, l.loanID, l.loanAmt
+FROM
+    banking b
+        INNER JOIN
+    loans l ON b.customerID = l.customerID;
+    
+SELECT 
+    a.account_id, a.account_type, b.branchname, b.branchid, b.branchaddress
+FROM
+    accounts a
+        INNER JOIN
+    branch b ON a.branchid = b.branchid
+    order by account_id desc;
+    
+SELECT 
+    b.Firstname, b.phone, t.account_type, t.Balance
+FROM
+    banking b
+        INNER JOIN
+    accounts t ON b.customerid = t.customerid
+WHERE
+    account_type = 'saving';
+    
+
+  
 
 
 
