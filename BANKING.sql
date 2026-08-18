@@ -508,12 +508,74 @@ FROM
 WHERE
     account_type = 'saving';
     
+insert into banking
+(CustomerID, FirstName, LastName, Email, Phone, DateofBirth)
+Values
+(109,"Ricky","Pointing","pointing@gmail.com","998855661","1961-07-12"),
+(110,"adam","gilcrist","adam@gmail.com","91542644","1962-07-12"),
+(111,"christopher","nolan","nolan@gmail.com","54487878","1963-02-12");
+select * from banking;
 
-  
+update banking set AccountCreationDate = "2022-06-15" where customerid= 109;
+update banking set AccountCreationDate = "2021-02-23" where customerid= 110;
 
+SELECT -- left join
+    b.firstname,
+    b.lastname,
+    b.phone,
+    b.accountcreationdate,
+    a.account_type,
+    a.balance
+FROM
+    banking b
+        LEFT JOIN
+    accounts a ON b.customerid = a.customerid; 
+    
+select * from branch;
 
+insert into branch 
+values 
+(906,"kamal chowk","indora nagpur","7856984521");
 
+select * from accounts;
 
+insert into accounts
+values(1264,"saving","30000",109,906),
+(1265,"saving","28300",110,904);
+
+select * from transaction;
+
+insert into transaction
+values(610,"2026-08-10",12000,"UPI",1256),
+(611,"2026-08-18",10000,"CASH",1257),
+(612,"2026-06-15",20000,"RTGS",1259),
+(613,"2026-08-16",9000,"CASH",1261),
+(614,"2026-03-19",85000,"RTGS",1263),
+(615,"2026-08-09",2000,"UPI",1258),
+(616,"2026-06-23",5000,"CASH",1257),
+(617,"2026-08-07",50000,"RTGS",1261);
+
+ALTER TABLE transaction
+ADD CONSTRAINT fk_transaction_account
+FOREIGN KEY (account_id)
+REFERENCES accounts(account_id);
+ALTER TABLE transaction
+ADD PRIMARY KEY (transactionID);
+DESCRIBE transaction;
+ALTER TABLE transaction
+DROP PRIMARY KEY;
+
+delete account_id from transaction;
+ALTER TABLE transaction
+DROP FOREIGN KEY transaction_ibfk_4;
+
+insert into accounts
+values(1266,"saving",50000,102,906),
+(1267,"saving",5000,108,906);
+
+SHOW CREATE TABLE transaction;
+
+select concat(b.firstname," ",b.lastname)as fullname ,a.Account_id,a.account_type from banking b inner join accounts a on b.customerid = a.customerid order by account_id;
 
 
 
