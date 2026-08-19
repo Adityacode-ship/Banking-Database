@@ -575,7 +575,82 @@ values(1266,"saving",50000,102,906),
 
 SHOW CREATE TABLE transaction;
 
-select concat(b.firstname," ",b.lastname)as fullname ,a.Account_id,a.account_type from banking b inner join accounts a on b.customerid = a.customerid order by account_id;
+SELECT 
+    CONCAT(b.firstname, ' ', b.lastname) AS fullname,
+    a.Account_id,
+    a.account_type
+FROM
+    banking b
+        INNER JOIN
+    accounts a ON b.customerid = a.customerid
+ORDER BY account_id;
+
+select b.firstname, b.lastname, count(a.account_id) 
+from banking b left join accounts a 
+on b.customerid = a.customerid
+group by b.customerid;
+
+select a.account_type , count(a.customerid) as totalcustomers
+from accounts a 
+left join banking b
+on a.customerid = b.customerid
+group by account_type;
+
+
+-- find customers who never performed any transaction 
+
+select concat(b.firstname," ",b.lastname) as fullname, count(t.account_id) as NoofTransactions
+from banking b 
+join accounts a
+on b.customerid = a.customerid
+left join transaction t 
+on t.account_id= a.account_id
+group by b.customerid
+having NoofTransactions = 0;
+-- display all branches that 
+select concat(b.firstname," ",b.lastname) as fullname, count(t.account_id) as NoofTransactions
+from banking b 
+join accounts a
+on b.customerid = a.customerid
+left join transaction t 
+on t.account_id= a.account_id
+group by b.customerid
+having NoofTransactions = 0;
+
+-- Display all branches and their account count, including branches that have zero accounts
+SELECT 
+    b.branchid,
+    b.branchname,
+    COUNT(a.account_id) AS TotalaAccounts
+FROM
+    branch b
+        LEFT JOIN
+    accounts a ON b.branchid = a.branchid
+GROUP BY b.branchid
+HAVING TotalaAccounts > 2;
+
+SELECT 
+    *
+FROM
+    banking b
+        LEFT JOIN
+    accounts a ON b.customerid = a.customerid 
+UNION 
+
+SELECT 
+    *
+FROM
+    banking b
+        RIGHT JOIN
+    accounts a ON b.customerid = a.customerid;
+ 
+
+
+
+
+
+
+
 
 
 
