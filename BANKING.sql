@@ -643,8 +643,140 @@ FROM
     banking b
         RIGHT JOIN
     accounts a ON b.customerid = a.customerid;
- 
+    
+    
+-- find the total balance held by each customer 
 
+select b.customerid,b.firstname,b.lastname, sum(a.balance) as TotalBalance from banking b left join accounts a on b.customerid= a.customerid group by customerid;
+
+select * from accounts; 
+
+
+-- Find customers who have more than 40000 on account balance
+SELECT 
+    b.customerid,
+    b.firstname,
+    b.lastname,
+    SUM(a.balance) AS TotalBalance
+FROM
+    banking b
+        LEFT JOIN
+    accounts a ON b.customerid = a.customerid
+GROUP BY customerid
+HAVING TotalBalance > 40000;
+
+-- display customerNAME, accountcreation date, accounttype, balance for customer whos account was created in 2025
+
+SELECT 
+    b.firstname,
+    b.accountcreationdate,
+    YEAR(b.accountcreationdate) AS AccountCreationYear,
+    a.account_type,
+    a.balance
+FROM
+    banking b
+        LEFT JOIN
+    accounts a ON b.customerid = a.customerid
+-- GROUP BY b.customerid
+HAVING AccountCreationYear = 2025;  
+
+-- find the heighest balance held by each accounttype
+select account_type, max(balance) from accounts group by account_type;
+
+-- find the number of accounts held by each customers
+SELECT 
+    b.firstname,
+    b.lastname,
+    b.customerid,
+    COUNT(a.account_id) AS TotalAccounts
+FROM
+    banking b
+        LEFT JOIN
+    accounts a ON b.customerid = a.customerid
+GROUP BY b.customerid; 
+ 
+-- Display:Customername,Accountcreation date,Accounttype and calculate the number of days since account creation.
+
+SELECT CONCAT(c.FirstName, ' ', c.LastName) AS CustomerName, c.AccountCreationDate, a.Account_Type,
+DATEDIFF(CURDATE(), c.AccountCreationDate) AS DaysSinceCreation
+FROM banking c
+JOIN Accounts a
+ON c.CustomerID = a.CustomerID;
+
+create table employees (
+EmployeeID int primary key,
+employeeName varchar(50) not null,
+ManagerID int,
+department varchar(50),
+salary decimal(10,2),
+joiningDate Date,
+BranchID int,
+
+foreign Key (managerid)
+references employees(employeeid),
+
+foreign key (branchID)
+references branch (branchid)
+);
+
+select * from employees;
+
+insert into employees values
+    (1, 'Rajesh Sharma', NULL, 'Management', 120000.00, '2018-04-15',901),
+    (2, 'Priya Patel', 1, 'Human Resources', 75000.00, '2019-06-10', 901),
+    (3, 'Amit Kumar', 1, 'Finance', 82000.00, '2020-01-20', 901),
+    (4, 'Sneha Verma', 1, 'IT', 95000.00, '2019-09-05', 902),
+    (5, 'Rahul Singh', 1, 'Sales', 78000.00, '2021-03-12',902),
+    (6, 'Neha Joshi', 2, 'Human Resources', 55000.00, '2021-07-19',902),
+    (7, 'Vikas Gupta', 2, 'Human Resources', 52000.00, '2022-02-14',903),
+    (8, 'Pooja Mehta', 3, 'Finance', 60000.00, '2021-11-08',903),
+    (9, 'Suresh Yadav', 3, 'Finance', 58000.00, '2022-05-16',903),
+    (10, 'Anjali Deshmukh', 4, 'IT', 72000.00, '2020-08-24',904),
+    (11, 'Rohan Kulkarni', 4, 'IT', 68000.00, '2021-10-11',904),
+    (12, 'Kavita Rao', 4, 'IT', 65000.00, '2022-01-17',904),
+    (13, 'Arjun Malhotra', 5, 'Sales', 57000.00, '2022-06-20',905),
+    (14, 'Meena Shah', 5, 'Sales', 59000.00, '2021-12-06',905),
+    (15, 'Deepak Thakur', 5, 'Sales', 54000.00, '2023-01-09',905),
+    (16, 'Nitin Pawar', 6, 'Human Resources', 42000.00, '2023-04-18',906),
+    (17, 'Swati Mishra', 7, 'Human Resources', 40000.00, '2023-07-03',906),
+    (18, 'Manish Jain', 8, 'Finance', 45000.00, '2023-02-27',906),
+    (19, 'Komal Sinha', 9, 'Finance', 43000.00, '2023-08-14',901),
+    (20, 'Akash Bansal', 10, 'IT', 50000.00, '2023-05-22',902);
+    
+select * from employees;
+
+update employees set employeename = "ritesh Rajje" where employeeID = 20;
+
+
+SELECT 
+    e.employeeid,e.employeename AS employee, m.employeename AS manager
+FROM
+    employees e
+        left JOIN
+    employees m ON e.managerid = m.employeeid;
+    
+-- include branch name also
+
+SELECT 
+    b.branchname, e.employeeid,e.employeename AS employee, m.employeename AS manager
+FROM
+    employees e
+        left JOIN
+    employees m ON e.managerid = m.employeeid
+	inner join branch b on b.branchID= e.branchID;
+    
+SELECT e.EmployeeID, e.EmployeeName, e.department, m.EmployeeName AS ManagerName
+FROM Employees e
+JOIN Employees m 
+ON e.ManagerID = m.EmployeeID
+WHERE m.EmployeeName = 'Sneha Verma';
+
+select * from employees 
+where managerid = 4;
+    
+    
+    
+    
 
 
 
